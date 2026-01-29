@@ -14,7 +14,7 @@ public class PriceCalculatorTest {
 
 	@Test
 	@DisplayName("price of a single book should be 50 EUR")
-	void singleBookCosts50() {
+	void priceOfSingleBookIs50() {
 		Basket basket = new Basket(Map.of(Book.CLEAN_CODE, 1));
 
 		BigDecimal price = priceCalculator.calculate(basket);
