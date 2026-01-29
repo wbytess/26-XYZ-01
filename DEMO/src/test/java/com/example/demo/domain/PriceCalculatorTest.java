@@ -29,6 +29,6 @@ public class PriceCalculatorTest {
 
 		BigDecimal price = priceCalculator.calculate(basket);
 
-		assertEquals(BigDecimal.valueOf(95), price);
+		assertEquals(0, price.compareTo(BigDecimal.valueOf(95)));
 	}
 }
