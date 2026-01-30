@@ -12,7 +12,8 @@ public class PriceCalculator {
 	private static final Map<Integer, BigDecimal> DISCOUNTS = Map.of(
 			1, BigDecimal.ZERO, 
 			2, BigDecimal.valueOf(0.05), 
-			3, BigDecimal.valueOf(0.10));
+			3, BigDecimal.valueOf(0.10),
+			4, BigDecimal.valueOf(0.20));
 
 	public BigDecimal calculate(Basket basket) {
 		int distinctBooks = basket.getItems().size();
