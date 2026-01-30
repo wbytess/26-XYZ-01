@@ -52,4 +52,20 @@ public class PriceCalculatorTest {
 
 		assertEquals(0, price.compareTo(BigDecimal.valueOf(160)));
 	}
+	
+	@Test
+	@DisplayName("five different books get 25 percent discount")
+	void fiveDifferentBooksGet25PercentDiscount() {
+	    Basket basket = new Basket(Map.of(
+	        Book.CLEAN_CODE, 1,
+	        Book.CLEAN_CODER, 1,
+	        Book.CLEAN_ARCHITECTURE, 1,
+	        Book.TDD_BY_EXAMPLE, 1,
+	        Book.LEGACY_CODE, 1
+	    ));
+
+	    BigDecimal price = priceCalculator.calculate(basket);
+
+	    assertEquals(0, price.compareTo(BigDecimal.valueOf(187.5)));
+	}
 }
