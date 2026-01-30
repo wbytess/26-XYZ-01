@@ -13,7 +13,8 @@ public class PriceCalculator {
 			1, BigDecimal.ZERO, 
 			2, BigDecimal.valueOf(0.05), 
 			3, BigDecimal.valueOf(0.10),
-			4, BigDecimal.valueOf(0.20));
+			4, BigDecimal.valueOf(0.20),
+			5, BigDecimal.valueOf(0.25));
 
 	public BigDecimal calculate(Basket basket) {
 		int distinctBooks = basket.getItems().size();
