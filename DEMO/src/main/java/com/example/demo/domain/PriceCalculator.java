@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -8,23 +9,18 @@ import org.springframework.stereotype.Service;
 public class PriceCalculator {
 
 	private static final BigDecimal BOOK_PRICE = BigDecimal.valueOf(50);
-	private static final BigDecimal FIVE_PERCENT_DISCOUNT = BigDecimal.valueOf(0.05);
+	private static final Map<Integer, BigDecimal> DISCOUNTS = Map.of(
+			1, BigDecimal.ZERO, 
+			2, BigDecimal.valueOf(0.05), 
+			3, BigDecimal.valueOf(0.10));
 
 	public BigDecimal calculate(Basket basket) {
 		int distinctBooks = basket.getItems().size();
 
-		// single book
-		if (distinctBooks == 1) {
-			return BOOK_PRICE;
-		}
+		BigDecimal discount = DISCOUNTS.getOrDefault(distinctBooks, BigDecimal.ZERO);
 
-		// two different books 5% discount
-		if (distinctBooks == 2) {
-			BigDecimal total = BOOK_PRICE.multiply(BigDecimal.valueOf(2));
-			BigDecimal discount = total.multiply(FIVE_PERCENT_DISCOUNT);
-			return total.subtract(discount);
-		}
+		BigDecimal total = BOOK_PRICE.multiply(BigDecimal.valueOf(distinctBooks));
 
-		return BigDecimal.ZERO;
+		return total.subtract(total.multiply(discount));
 	}
 }
