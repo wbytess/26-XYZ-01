@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
@@ -37,9 +38,7 @@ class PriceControllerTest {
 		BasketRequest request = TestRequestBuilder.basketWithCleanCode(1);
 
 		// when / then
-		mockMvc.perform(post("/api/v1/price").contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
-				.andExpect(content().string("50"));
+		assertPrice(request, BigDecimal.valueOf(50));
 	}
 
 	@Test
@@ -52,9 +51,7 @@ class PriceControllerTest {
 				new BookSpec(2L, "CLEAN_CODER", BigDecimal.valueOf(50), 1));
 
 		// when / then
-		mockMvc.perform(post("/api/v1/price").contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
-				.andExpect(content().string("95.00"));
+		assertPrice(request, BigDecimal.valueOf(95));
 	}
 	
 	@Test
@@ -68,9 +65,8 @@ class PriceControllerTest {
 				new BookSpec(3L, "CLEAN_ARCHITECTURE", BigDecimal.valueOf(50), 1));
 
 		// when / then
-		mockMvc.perform(post("/api/v1/price").contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
-				.andExpect(content().string("135.0"));
+		assertPrice(request, BigDecimal.valueOf(135));
+		
 	}
 	
 	@Test
@@ -85,9 +81,7 @@ class PriceControllerTest {
 				new BookSpec(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50), 1));
 
 		// when / then
-		mockMvc.perform(post("/api/v1/price").contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
-				.andExpect(content().string("160.0"));
+		assertPrice(request, BigDecimal.valueOf(160));
 	}
 	
 	@Test
@@ -103,9 +97,7 @@ class PriceControllerTest {
 				new BookSpec(5L, "LEGACY_CODE", BigDecimal.valueOf(50), 1));
 
 		// when / then
-		mockMvc.perform(post("/api/v1/price").contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
-				.andExpect(content().string("187.50"));
+		assertPrice(request, BigDecimal.valueOf(187.50));
 	}
 	
 	@Test
@@ -121,9 +113,7 @@ class PriceControllerTest {
 				new BookSpec(5L, "LEGACY_CODE", BigDecimal.valueOf(50), 1));
 
 		// when / then
-		mockMvc.perform(post("/api/v1/price").contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
-				.andExpect(content().string("320.0"));
+		assertPrice(request, BigDecimal.valueOf(320));
 	}
 	
 	@Test
@@ -139,8 +129,17 @@ class PriceControllerTest {
 				new BookSpec(5L, "LEGACY_CODE", BigDecimal.valueOf(50), 1));
 
 		// when / then
-		mockMvc.perform(post("/api/v1/price").contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
-				.andExpect(content().string("455.0"));
+		assertPrice(request, BigDecimal.valueOf(455));
 	}
+	
+	private void assertPrice(BasketRequest request, BigDecimal expected) throws Exception {
+	    mockMvc.perform(
+	            post("/api/v1/price")
+	                .contentType(MediaType.APPLICATION_JSON)
+	                .content(objectMapper.writeValueAsString(request))
+	        )
+	        .andExpect(status().isOk())
+	        .andExpect(jsonPath("$").value(expected.doubleValue()));
+	}
+
 }
