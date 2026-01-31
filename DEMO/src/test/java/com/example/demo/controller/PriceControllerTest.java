@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -131,6 +130,19 @@ class PriceControllerTest {
 		// when / then
 		assertPrice(request, BigDecimal.valueOf(455));
 	}
+	
+	@Test
+	@DisplayName("bookId must not be null")
+    void shouldReturnBadRequestForBookWithNullId() throws Exception {
+		BasketRequest request = TestRequestBuilder.basketWithBooks(
+				new BookSpec(null, "CLEAN_CODE", BigDecimal.valueOf(50), 1));
+
+		// when / then
+        mockMvc.perform(post("/api/v1/price")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
 	
 	private void assertPrice(BasketRequest request, BigDecimal expected) throws Exception {
 	    mockMvc.perform(
