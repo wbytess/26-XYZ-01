@@ -151,6 +151,16 @@ class PriceControllerTest {
 		assertBadRequest(request);
     }
 	
+	@Test
+	@DisplayName("price must not be null")
+    void shouldReturnBadRequestForBookWithNullPrice() throws Exception {
+		BasketRequest request = TestRequestBuilder.basketWithBooks(
+				new BookSpec(1L, "CLEAN_CODE", null, 1));
+
+		// when / then
+		assertBadRequest(request);
+    }
+	
 	private void assertPrice(BasketRequest request, BigDecimal expected) throws Exception {
 	    mockMvc.perform(
 	            post("/api/v1/price")
