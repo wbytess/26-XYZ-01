@@ -13,23 +13,26 @@ public class TestRequestBuilder {
     /**
      * Build a BasketRequest using book specs.
      */
-    public static BasketRequest basketWithBooks(BookSpec... specs) {
-        BasketItemRequest[] items = new BasketItemRequest[specs.length];
+	public static BasketRequest basketWithBooks(BookSpec... specs) {
+	    BasketRequest request = new BasketRequest();
 
-        for (int i = 0; i < specs.length; i++) {
-            BookSpec spec = specs[i];
+	    for (BookSpec spec : specs) {
+	        BookRequest bookRequest = BookTestFactory.bookRequest(
+	                spec.bookId(),
+	                spec.bookName(),
+	                spec.price()
+	        );
 
-            BookRequest book = BookTestFactory.book(
-                spec.bookId(),
-                spec.bookName(),
-                spec.price()
-            );
+	        BasketItemRequest item = new BasketItemRequest();
+	        item.setBook(bookRequest);
+	        item.setQuantity(spec.quantity());
 
-            items[i] = BasketTestFactory.item(book, spec.quantity());
-        }
+	        request.getItems().add(item);
+	    }
 
-        return BasketTestFactory.basketWithItems(items);
-    }
+	    return request;
+	}
+
 
     /**
      * method for common test cases.

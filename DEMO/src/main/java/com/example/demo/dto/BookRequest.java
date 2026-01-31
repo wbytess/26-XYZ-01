@@ -2,10 +2,17 @@ package com.example.demo.dto;
 
 import java.math.BigDecimal;
 
+import jakarta.validation.constraints.NotNull;
+
 public class BookRequest {
 
-	private Long bookId;
+    @NotNull(message = "bookId must not be null")
+    private Long bookId;
+
+    @NotNull(message = "bookName must not be null")
     private String bookName;
+
+    @NotNull(message = "price must not be null")
     private BigDecimal price;
     
 	public Long getBookId() {

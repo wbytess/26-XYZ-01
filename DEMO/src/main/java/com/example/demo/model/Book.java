@@ -3,40 +3,18 @@ package com.example.demo.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Book {
+public record Book(
+        Long bookId,
+        String bookName,
+        BigDecimal price
+) {
+    public Book {
+        Objects.requireNonNull(bookId, "bookId must not be null");
+        Objects.requireNonNull(bookName, "bookName must not be null");
+        Objects.requireNonNull(price, "price must not be null");
 
-    private Long bookId;
-    private String bookName;
-    private BigDecimal price;
-
-    public Book(Long bookId, String bookName, BigDecimal price) {
-        this.bookId = bookId;
-        this.bookName = bookName;
-        this.price = price;
-    }
-
-	public Long getBookId() {
-        return bookId;
-    }
-
-    public String getBookName() {
-        return bookName;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Book)) return false;
-        Book book = (Book) o;
-        return Objects.equals(bookId, book.bookId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(bookId);
+        if (price.signum() < 0) {
+            throw new IllegalArgumentException("price must be non-negative");
+        }
     }
 }

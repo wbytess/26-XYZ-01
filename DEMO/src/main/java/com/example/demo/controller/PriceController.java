@@ -18,6 +18,8 @@ import com.example.demo.dto.BasketRequest;
 import com.example.demo.dto.BookRequest;
 import com.example.demo.model.Book;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 public class PriceController {
@@ -29,15 +31,10 @@ public class PriceController {
     }
 
 	@PostMapping("/v1/price")
-	public ResponseEntity<BigDecimal> calculatePrice(@RequestBody BasketRequest request) {
-	    try {
+	public ResponseEntity<BigDecimal> calculatePrice(@Valid @RequestBody BasketRequest request) {
 	        Basket basket = toBasket(request);
 	        BigDecimal price = priceCalculator.calculate(basket);
 	        return ResponseEntity.ok(price);
-	    } catch (Exception e) {
-	        e.printStackTrace(); // log the exception
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	    }
 	}
 	
 	public Basket toBasket(BasketRequest request) {
@@ -46,7 +43,7 @@ public class PriceController {
 	        for (BasketItemRequest item : request.getItems()) {
 	            BookRequest br = item.getBook();
 	            Book book = new Book(br.getBookId(), br.getBookName(), br.getPrice());
-	            items.merge(book, item.getQuantity(), Integer::sum);
+	            items.put(book, item.getQuantity());
 	        }
 	    }
 	    return new Basket(items);
