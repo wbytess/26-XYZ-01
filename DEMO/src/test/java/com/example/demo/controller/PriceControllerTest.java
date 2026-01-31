@@ -138,10 +138,17 @@ class PriceControllerTest {
 				new BookSpec(null, "CLEAN_CODE", BigDecimal.valueOf(50), 1));
 
 		// when / then
-        mockMvc.perform(post("/api/v1/price")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isBadRequest());
+		assertBadRequest(request);
+    }
+	
+	@Test
+	@DisplayName("bookName must not be null")
+    void shouldReturnBadRequestForBookWithNullBookName() throws Exception {
+		BasketRequest request = TestRequestBuilder.basketWithBooks(
+				new BookSpec(1L, null, BigDecimal.valueOf(50), 1));
+
+		// when / then
+		assertBadRequest(request);
     }
 	
 	private void assertPrice(BasketRequest request, BigDecimal expected) throws Exception {
@@ -152,6 +159,13 @@ class PriceControllerTest {
 	        )
 	        .andExpect(status().isOk())
 	        .andExpect(jsonPath("$").value(expected.doubleValue()));
+	}
+	
+	private void assertBadRequest(BasketRequest request) throws Exception {
+		mockMvc.perform(post("/api/v1/price")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+        .andExpect(status().isBadRequest());
 	}
 
 }
