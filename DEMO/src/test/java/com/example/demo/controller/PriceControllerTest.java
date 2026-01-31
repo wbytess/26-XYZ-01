@@ -90,5 +90,21 @@ class PriceControllerTest {
 				.andExpect(content().string("160.0"));
 	}
 	
-	
+	@Test
+	@DisplayName("five different books get 25 percent discount")
+	void fiveDifferentBooksGet25PercentDiscount() throws Exception {
+
+		// given
+		BasketRequest request = TestRequestBuilder.basketWithBooks(
+				new BookSpec(1L, "CLEAN_CODE", BigDecimal.valueOf(50), 1),
+				new BookSpec(2L, "CLEAN_CODER", BigDecimal.valueOf(50), 1),
+				new BookSpec(3L, "CLEAN_ARCHITECTURE", BigDecimal.valueOf(50), 1),
+				new BookSpec(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50), 1),
+				new BookSpec(5L, "LEGACY_CODE", BigDecimal.valueOf(50), 1));
+
+		// when / then
+		mockMvc.perform(post("/api/v1/price").contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
+				.andExpect(content().string("187.50"));
+	}
 }
