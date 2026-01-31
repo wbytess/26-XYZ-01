@@ -47,7 +47,7 @@ public class PriceCalculatorTest {
 	void threeDifferentBooksGet10PercentDiscount() {
 		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
 		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
-		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_ARCHITECTURE", BigDecimal.valueOf(50));
 		Basket basket = new Basket(
 			    Map.of(
 			        cleanCode, 1,
@@ -66,7 +66,7 @@ public class PriceCalculatorTest {
 	void fourDifferentBooksGet20PercentDiscount() {
 		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
 		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
-		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_ARCHITECTURE", BigDecimal.valueOf(50));
 		Book tddByExample = new Book(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50));
 		Basket basket = new Basket(
 			    Map.of(
@@ -87,7 +87,7 @@ public class PriceCalculatorTest {
 	void fiveDifferentBooksGet25PercentDiscount() {
 		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
 		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
-		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_ARCHITECTURE", BigDecimal.valueOf(50));
 		Book tddByExample = new Book(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50));
 		Book legacyCode = new Book(5L, "LEGACY_CODE", BigDecimal.valueOf(50));
 		Basket basket = new Basket(
@@ -110,7 +110,7 @@ public class PriceCalculatorTest {
     void assignmentExample() {
 		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
 		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
-		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_ARCHITECTURE", BigDecimal.valueOf(50));
 		Book tddByExample = new Book(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50));
 		Book legacyCode = new Book(5L, "LEGACY_CODE", BigDecimal.valueOf(50));
 		Basket basket = new Basket(
@@ -132,7 +132,7 @@ public class PriceCalculatorTest {
     void basketExampleShouldCost455() {
 		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
 		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
-		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_ARCHITECTURE", BigDecimal.valueOf(50));
 		Book tddByExample = new Book(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50));
 		Book legacyCode = new Book(5L, "LEGACY_CODE", BigDecimal.valueOf(50));
 		Basket basket = new Basket(
