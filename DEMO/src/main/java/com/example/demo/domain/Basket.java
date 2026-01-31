@@ -2,6 +2,8 @@ package com.example.demo.domain;
 
 import java.util.Map;
 
+import com.example.demo.domain.model.Book;
+
 public class Basket {
 
 	private final Map<Book, Integer> items;

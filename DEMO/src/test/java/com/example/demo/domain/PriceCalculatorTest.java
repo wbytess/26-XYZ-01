@@ -8,6 +8,8 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.example.demo.domain.model.Book;
+
 public class PriceCalculatorTest {
 
 	private final PriceCalculator priceCalculator = new PriceCalculator();
@@ -15,7 +17,8 @@ public class PriceCalculatorTest {
 	@Test
 	@DisplayName("price of a single book should be 50 EUR")
 	void priceOfSingleBookIs50() {
-		Basket basket = new Basket(Map.of(Book.CLEAN_CODE, 1));
+		Book cleanCode = new Book(1L,"CLEAN_CODE",BigDecimal.valueOf(50));
+		Basket basket = new Basket(Map.of(cleanCode, 1));
 
 		BigDecimal price = priceCalculator.calculate(basket);
 
@@ -25,7 +28,14 @@ public class PriceCalculatorTest {
 	@Test
 	@DisplayName("two different books get 5 percent discount")
 	void twoDifferentBooksGet5PercentDiscount() {
-		Basket basket = new Basket(Map.of(Book.CLEAN_CODE, 1, Book.CLEAN_CODER, 1));
+		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
+		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Basket basket = new Basket(
+			    Map.of(
+			        cleanCode, 1,
+			        cleanCoder, 1
+			    )
+			);
 
 		BigDecimal price = priceCalculator.calculate(basket);
 
@@ -35,7 +45,16 @@ public class PriceCalculatorTest {
 	@Test
 	@DisplayName("three different books get 10 percent discount")
 	void threeDifferentBooksGet10PercentDiscount() {
-		Basket basket = new Basket(Map.of(Book.CLEAN_CODE, 1, Book.CLEAN_CODER, 1, Book.CLEAN_ARCHITECTURE, 1));
+		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
+		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Basket basket = new Basket(
+			    Map.of(
+			        cleanCode, 1,
+			        cleanCoder, 1,
+			        cleanArchitecture, 1
+			    )
+			);
 
 		BigDecimal price = priceCalculator.calculate(basket);
 
@@ -45,8 +64,18 @@ public class PriceCalculatorTest {
 	@Test
 	@DisplayName("four different books get 20 percent discount")
 	void fourDifferentBooksGet20PercentDiscount() {
+		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
+		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book tddByExample = new Book(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50));
 		Basket basket = new Basket(
-				Map.of(Book.CLEAN_CODE, 1, Book.CLEAN_CODER, 1, Book.CLEAN_ARCHITECTURE, 1, Book.TDD_BY_EXAMPLE, 1));
+			    Map.of(
+			        cleanCode, 1,
+			        cleanCoder, 1,
+			        cleanArchitecture, 1,
+			        tddByExample, 1
+			    )
+			);
 
 		BigDecimal price = priceCalculator.calculate(basket);
 
@@ -56,13 +85,20 @@ public class PriceCalculatorTest {
 	@Test
 	@DisplayName("five different books get 25 percent discount")
 	void fiveDifferentBooksGet25PercentDiscount() {
-	    Basket basket = new Basket(Map.of(
-	        Book.CLEAN_CODE, 1,
-	        Book.CLEAN_CODER, 1,
-	        Book.CLEAN_ARCHITECTURE, 1,
-	        Book.TDD_BY_EXAMPLE, 1,
-	        Book.LEGACY_CODE, 1
-	    ));
+		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
+		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book tddByExample = new Book(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50));
+		Book legacyCode = new Book(5L, "LEGACY_CODE", BigDecimal.valueOf(50));
+		Basket basket = new Basket(
+			    Map.of(
+			        cleanCode, 1,
+			        cleanCoder, 1,
+			        cleanArchitecture, 1,
+			        tddByExample, 1,
+			        legacyCode, 1
+			    )
+			);
 
 	    BigDecimal price = priceCalculator.calculate(basket);
 
@@ -72,13 +108,20 @@ public class PriceCalculatorTest {
 	@Test
 	@DisplayName("assignment example basket should cost 320 EUR.")
     void assignmentExample() {
-        Basket basket = new Basket(Map.of(
-            Book.CLEAN_CODE, 2,
-            Book.CLEAN_CODER, 2,
-            Book.CLEAN_ARCHITECTURE, 2,
-            Book.TDD_BY_EXAMPLE, 1,
-            Book.LEGACY_CODE, 1
-        ));
+		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
+		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book tddByExample = new Book(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50));
+		Book legacyCode = new Book(5L, "LEGACY_CODE", BigDecimal.valueOf(50));
+		Basket basket = new Basket(
+			    Map.of(
+			        cleanCode, 2,
+			        cleanCoder, 2,
+			        cleanArchitecture, 2,
+			        tddByExample, 1,
+			        legacyCode, 1
+			    )
+			);
         
         BigDecimal price = priceCalculator.calculate(basket);
         assertEquals(0, price.compareTo(BigDecimal.valueOf(320)));
@@ -87,13 +130,20 @@ public class PriceCalculatorTest {
 	@Test
 	@DisplayName("basket should cost 455 EUR.")
     void basketExampleShouldCost455() {
-        Basket basket = new Basket(Map.of(
-            Book.CLEAN_CODE, 3,
-            Book.CLEAN_CODER, 3,
-            Book.CLEAN_ARCHITECTURE, 3,
-            Book.TDD_BY_EXAMPLE, 1,
-            Book.LEGACY_CODE, 1
-        ));
+		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
+		Book cleanCoder = new Book(2L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book cleanArchitecture = new Book(3L, "CLEAN_CODER", BigDecimal.valueOf(50));
+		Book tddByExample = new Book(4L, "TDD_BY_EXAMPLE", BigDecimal.valueOf(50));
+		Book legacyCode = new Book(5L, "LEGACY_CODE", BigDecimal.valueOf(50));
+		Basket basket = new Basket(
+			    Map.of(
+			        cleanCode, 3,
+			        cleanCoder, 3,
+			        cleanArchitecture, 3,
+			        tddByExample, 1,
+			        legacyCode, 1
+			    )
+			);
         
         BigDecimal price = priceCalculator.calculate(basket);
         assertEquals(0, price.compareTo(BigDecimal.valueOf(455)));
@@ -102,9 +152,13 @@ public class PriceCalculatorTest {
 	@Test
 	@DisplayName("no discount for 5 copies of same book (5 * base price).")
     void basketExampleShouldCost250() {
-        Basket basket = new Basket(Map.of(
-            Book.CLEAN_CODE, 5
-        ));
+		Book cleanCode = new Book(1L, "CLEAN_CODE", BigDecimal.valueOf(50));
+		
+		Basket basket = new Basket(
+			    Map.of(
+			        cleanCode, 5
+			    )
+			);
         
         BigDecimal price = priceCalculator.calculate(basket);
         assertEquals(0, price.compareTo(BigDecimal.valueOf(250)));
