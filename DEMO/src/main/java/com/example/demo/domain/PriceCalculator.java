@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class PriceCalculator {
             .sorted(Comparator.reverseOrder())
             .toList();
 
-		return priceForSet(distinctBooks.size());
+		return calculateBestPrice(distinctBooks);
 	}
 	
 	 
@@ -34,5 +35,36 @@ public class PriceCalculator {
         BigDecimal base =
             BOOK_PRICE.multiply(BigDecimal.valueOf(size));
         return base.subtract(base.multiply(DISCOUNTS.get(size)));
+    }
+    
+    private BigDecimal calculateBestPrice(List<Integer> quantities) {
+    	int distinctBooks = quantities.size();
+    	BigDecimal minPrice = BigDecimal.valueOf(Double.MAX_VALUE);
+    	
+        if (quantities.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+        
+    	for (int setSize = 1; setSize <= distinctBooks; setSize++) {
+            List<Integer> remaining = new ArrayList<>();
+
+            for (int i = 0; i < quantities.size(); i++) {
+                int qty = quantities.get(i);
+                if (i < setSize && qty > 0) {
+                    qty--;
+                }
+                if (qty > 0) {
+                    remaining.add(qty);
+                }
+            }
+
+            remaining.sort(Comparator.reverseOrder());
+
+            BigDecimal price =
+                priceForSet(setSize).add(calculateBestPrice(remaining));
+
+            minPrice = minPrice.min(price);
+        }
+    	return minPrice;
     }
 }
