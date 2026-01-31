@@ -2,7 +2,7 @@ package com.example.demo.domain;
 
 import java.util.Map;
 
-import com.example.demo.domain.model.Book;
+import com.example.demo.model.Book;
 
 public class Basket {
 

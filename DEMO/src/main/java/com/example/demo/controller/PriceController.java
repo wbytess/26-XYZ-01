@@ -1,10 +1,9 @@
-package com.example.demo.domain.controller;
+package com.example.demo.controller;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.Basket;
 import com.example.demo.domain.PriceCalculator;
-import com.example.demo.domain.dto.BasketItemRequest;
-import com.example.demo.domain.dto.BasketRequest;
-import com.example.demo.domain.dto.BookRequest;
-import com.example.demo.domain.model.Book;
+import com.example.demo.dto.BasketItemRequest;
+import com.example.demo.dto.BasketRequest;
+import com.example.demo.dto.BookRequest;
+import com.example.demo.model.Book;
 
 @RestController
 @RequestMapping("/api")

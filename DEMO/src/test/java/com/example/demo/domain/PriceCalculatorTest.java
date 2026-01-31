@@ -8,7 +8,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.example.demo.domain.model.Book;
+import com.example.demo.model.Book;
 
 public class PriceCalculatorTest {
 

@@ -15,9 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.example.demo.domain.dto.BasketItemRequest;
-import com.example.demo.domain.dto.BasketRequest;
-import com.example.demo.domain.dto.BookRequest;
+import com.example.demo.dto.BasketItemRequest;
+import com.example.demo.dto.BasketRequest;
+import com.example.demo.dto.BookRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
