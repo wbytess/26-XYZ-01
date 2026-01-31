@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -162,5 +163,49 @@ public class PriceCalculatorTest {
         
         BigDecimal price = priceCalculator.calculate(basket);
         assertEquals(0, price.compareTo(BigDecimal.valueOf(250)));
+    }
+	
+	@Test
+	@DisplayName("bookId must not be null")
+    void shouldThrowNullPointerExceptionWhenBookIdIsNull() {
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> new Book(null, "TEST", BigDecimal.valueOf(10))
+        );
+
+        assertEquals("bookId must not be null", exception.getMessage());
+    }
+	
+	@Test
+	@DisplayName("bookName must not be null")
+    void shouldThrowNullPointerExceptionWhenBookNameIsNull() {
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> new Book(1L, null, BigDecimal.valueOf(10))
+        );
+
+        assertEquals("bookName must not be null", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("price must not be null")
+    void shouldThrowNullPointerExceptionWhenPriceIsNull() {
+        NullPointerException exception = assertThrows(
+                NullPointerException.class,
+                () -> new Book(1L, "TEST", null)
+        );
+
+        assertEquals("price must not be null", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("price must be non negative")
+    void shouldThrowIllegalArgumentExceptionWhenPriceIsNegative() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Book(1L, "TEST", BigDecimal.valueOf(-5))
+        );
+
+        assertEquals("price must be non-negative", exception.getMessage());
     }
 }
