@@ -1,6 +1,8 @@
 package com.example.demo.domain;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -17,12 +19,20 @@ public class PriceCalculator {
 			5, BigDecimal.valueOf(0.25));
 
 	public BigDecimal calculate(Basket basket) {
-		int distinctBooks = basket.getItems().size();
+		//Extract distinctBooks from basket and sort in descending order
+        List<Integer> distinctBooks = basket.getItems().values().stream()
+            .filter(q -> q > 0)
+            .sorted(Comparator.reverseOrder())
+            .toList();
 
-		BigDecimal discount = DISCOUNTS.getOrDefault(distinctBooks, BigDecimal.ZERO);
-
-		BigDecimal total = BOOK_PRICE.multiply(BigDecimal.valueOf(distinctBooks));
-
-		return total.subtract(total.multiply(discount));
+		return priceForSet(distinctBooks.size());
 	}
+	
+	 
+    private BigDecimal priceForSet(int size) {
+    	//Calculate base price eg, size × 50. Apply discount based on set size. Return discounted price
+        BigDecimal base =
+            BOOK_PRICE.multiply(BigDecimal.valueOf(size));
+        return base.subtract(base.multiply(DISCOUNTS.get(size)));
+    }
 }
