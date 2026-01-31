@@ -56,4 +56,20 @@ class PriceControllerTest {
 				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
 				.andExpect(content().string("95.00"));
 	}
+	
+	@Test
+	@DisplayName("three different books get 10 percent discount")
+	void threeDifferentBooksGet10PercentDiscount() throws Exception {
+
+		// given
+		BasketRequest request = TestRequestBuilder.basketWithBooks(
+				new BookSpec(1L, "CLEAN_CODE", BigDecimal.valueOf(50), 1),
+				new BookSpec(2L, "CLEAN_CODER", BigDecimal.valueOf(50), 1),
+				new BookSpec(3L, "CLEAN_ARCHITECTURE", BigDecimal.valueOf(50), 1));
+
+		// when / then
+		mockMvc.perform(post("/api/v1/price").contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(request))).andExpect(status().isOk())
+				.andExpect(content().string("135.0"));
+	}
 }
